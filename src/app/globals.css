@@ -1,26 +1,516 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --ocean: #0077B6;
+  --ocean-dark: #005F8A;
+  --ocean-light: #90E0EF;
+  --sunset: #F4A261;
+  --sunset-dark: #E76F51;
+  --forest: #2D6A4F;
+  --forest-light: #52B788;
+  --sand: #FEFAE0;
+  --sand-dark: #F5EFC5;
+  --dark: #0A1628;
+  --dark-card: #111D30;
+  --muted: #6B7A99;
+  --white: #FFFFFF;
+  --radius: 16px;
+  --radius-sm: 8px;
+  --radius-lg: 24px;
+  --shadow: 0 4px 24px rgba(0,119,182,0.12);
+  --shadow-lg: 0 8px 48px rgba(0,119,182,0.2);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-be-vietnam), sans-serif;
+  background: var(--sand);
+  color: var(--dark);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ── Typography ── */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--dark);
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--sand-dark); }
+::-webkit-scrollbar-thumb { background: var(--ocean); border-radius: 99px; }
+
+/* ── Buttons ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 99px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  cursor: pointer;
+  border: none;
+  transition: all 0.25s ease;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--ocean), var(--ocean-dark));
+  color: white;
+  box-shadow: 0 4px 16px rgba(0,119,182,0.35);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,119,182,0.45);
+  background: linear-gradient(135deg, #0088cc, var(--ocean));
+}
+
+.btn-secondary {
+  background: linear-gradient(135deg, var(--sunset), var(--sunset-dark));
+  color: white;
+  box-shadow: 0 4px 16px rgba(244,162,97,0.35);
+}
+
+.btn-secondary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(244,162,97,0.45);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--ocean);
+  border: 2px solid var(--ocean);
+}
+
+.btn-outline:hover {
+  background: var(--ocean);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.btn-ghost {
+  background: rgba(255,255,255,0.15);
+  color: white;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.3);
+}
+
+.btn-ghost:hover {
+  background: rgba(255,255,255,0.25);
+  transform: translateY(-2px);
+}
+
+/* ── Cards ── */
+.card {
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+}
+
+.glass-card {
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: var(--radius);
+}
+
+/* ── Input ── */
+.input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e8edf5;
+  border-radius: var(--radius-sm);
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 0.95rem;
+  color: var(--dark);
+  background: white;
+  transition: all 0.2s;
+  outline: none;
+}
+
+.input:focus {
+  border-color: var(--ocean);
+  box-shadow: 0 0 0 3px rgba(0,119,182,0.1);
+}
+
+.input::placeholder {
+  color: var(--muted);
+}
+
+select.input {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236B7A99'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 20px;
+  padding-right: 40px;
+}
+
+/* ── Badge ── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border-radius: 99px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.badge-pending {
+  background: #FFF3CD;
+  color: #856404;
+}
+
+.badge-confirmed {
+  background: #D1FAE5;
+  color: #065F46;
+}
+
+.badge-cancelled {
+  background: #FEE2E2;
+  color: #991B1B;
+}
+
+/* ── Section ── */
+.section {
+  padding: 80px 0;
+}
+
+.section-sm {
+  padding: 48px 0;
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.section-title {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+
+.section-subtitle {
+  font-size: 1.1rem;
+  color: var(--muted);
+  max-width: 560px;
+}
+
+/* ── Grid ── */
+.tour-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 28px;
+}
+
+.destination-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+/* ── Star rating ── */
+.stars {
+  display: flex;
+  gap: 2px;
+  color: #F59E0B;
+}
+
+/* ── Animations ── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-fade-up {
+  animation: fadeInUp 0.6s ease both;
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 8px;
+}
+
+/* ── Gallery ── */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 280px 280px;
+  gap: 8px;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.gallery-main {
+  grid-row: span 2;
+  position: relative;
+  overflow: hidden;
+}
+
+.gallery-sub {
+  position: relative;
+  overflow: hidden;
+}
+
+.gallery-grid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.gallery-grid img:hover {
+  transform: scale(1.05);
+}
+
+/* ── Price display ── */
+.price-tag {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--ocean);
+}
+
+.price-tag span {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+/* ── Divider ── */
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #e8edf5, transparent);
+  margin: 24px 0;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .section { padding: 48px 0; }
+  .tour-grid { grid-template-columns: 1fr; }
+  .gallery-grid { 
+    grid-template-columns: 1fr;
+    grid-template-rows: 240px 160px 160px;
+  }
+  .gallery-main { grid-row: span 1; }
+}
+
+/* ── Notification ── */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  padding: 16px 24px;
+  border-radius: var(--radius-sm);
+  background: var(--dark);
+  color: white;
+  box-shadow: var(--shadow-lg);
+  animation: fadeInUp 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 500;
+}
+
+/* ── Itinerary ── */
+.itinerary-item {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 20px;
+  padding: 24px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.itinerary-day-num {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, var(--ocean), var(--ocean-dark));
+  color: white;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+/* ── Filter sidebar ── */
+.filter-section {
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.filter-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.filter-label {
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--muted);
+  margin-bottom: 12px;
+  display: block;
+}
+
+/* ── Admin table ── */
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.admin-table th {
+  background: #f8faff;
+  padding: 14px 16px;
+  text-align: left;
+  font-weight: 700;
+  color: var(--muted);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid #e8edf5;
+}
+
+.admin-table td {
+  padding: 16px;
+  border-bottom: 1px solid #f0f5ff;
+  vertical-align: middle;
+}
+
+.admin-table tr:hover td {
+  background: #f8faff;
+}
+
+/* ── Form ── */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--dark);
+  margin-bottom: 8px;
+}
+
+.form-error {
+  color: #DC2626;
+  font-size: 0.82rem;
+  margin-top: 4px;
+}
+
+/* ── Booking widget ── */
+.booking-widget {
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: 0 8px 48px rgba(0,0,0,0.12);
+  padding: 28px;
+  position: sticky;
+  top: 100px;
+}
+
+/* ── Page hero ── */
+.page-hero {
+  background: linear-gradient(135deg, var(--dark) 0%, #0d2144 100%);
+  color: white;
+  padding: 64px 0 48px;
+}
+
+/* ── Number input ── */
+.number-input {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border: 2px solid #e8edf5;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.number-input button {
+  width: 40px;
+  height: 44px;
+  background: #f8faff;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--ocean);
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.number-input button:hover {
+  background: var(--ocean-light);
+}
+
+.number-input span {
+  flex: 1;
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+/* ── Loading spinner ── */
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba(0,119,182,0.2);
+  border-top-color: var(--ocean);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
